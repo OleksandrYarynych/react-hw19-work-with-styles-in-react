@@ -8,41 +8,40 @@ export default function SignUpPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [sendEmails, setSendEmails] = useState(false);
-  const [isFirstNameValueCorrect, setIsFirstNameValueCorrect] = useState(false);
-  const [isLastNameValueCorrect, setIsLastNameValueCorrect] = useState(false);
-  const [isLoginValueCorrect, setIsLoginValueCorrect] = useState(false);
-  const [isPasswordValueCorrect, setIsPasswordValuueCorrect] = useState(false);
+  const [isFirstNameValueValid, setIsFirstNameValueValid] = useState(false);
+  const [isLastNameValueValid, setIsLastNameValueValid] = useState(false);
+  const [isLoginValueValid, setIsLoginValueValid] = useState(false);
+  const [isPasswordValueValid, setIsPasswordValueValid] = useState(false);
 
   useEffect(() => {
-    if (firstName.length >= 3) setIsFirstNameValueCorrect(true);
-    else setIsFirstNameValueCorrect(false);
-    if (lastName.length >= 3) setIsLastNameValueCorrect(true);
-    else setIsLastNameValueCorrect(false);
+    if (firstName.length >= 3) setIsFirstNameValueValid(true);
+    else setIsFirstNameValueValid(false);
+    if (lastName.length >= 3) setIsLastNameValueValid(true);
+    else setIsLastNameValueValid(false);
   }, [firstName, lastName]);
 
   useEffect(() => {
     const regularExpression = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    setIsLoginValueCorrect(regularExpression.test(login));
+    setIsLoginValueValid(regularExpression.test(login));
   }, [login]);
 
   useEffect(() => {
     const regularExpression = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{8,}$/;
-    setIsPasswordValuueCorrect(regularExpression.test(password));
+    setIsPasswordValueValid(regularExpression.test(password));
   });
 
-  const isEveryFeldNotEmpty = () =>
-    isFirstNameValueCorrect &&
-    isLastNameValueCorrect &&
-    isLoginValueCorrect &&
-    isPasswordValueCorrect;
+  const isEveryFeldNotEmpty =
+    setIsFirstNameValueValid &&
+    setIsLastNameValueValid &&
+    setIsLoginValueValid &&
+    setIsPasswordValueValid;
 
   const sendDataToLocalStorrage = () => {
     if (isEveryFeldNotEmpty()) {
       const user = {
         firstName:
-          firstName[0].toLocaleUpperCase() + firstName.slice(1).toLowerCase(),
-        lastName:
-          lastName[0].toLocaleUpperCase() + lastName.slice(1).toLowerCase(),
+          firstName[0].toUpperCase() + firstName.slice(1).toLowerCase(),
+        lastName: lastName[0].toUpperCase() + lastName.slice(1).toLowerCase(),
         login: login,
         password: password,
         sendEmails: sendEmails,
@@ -71,7 +70,7 @@ export default function SignUpPage() {
             className={
               !firstName
                 ? "input-feld"
-                : isFirstNameValueCorrect
+                : isFirstNameValueValid
                 ? "input-feld input-feld-succesfull"
                 : "input-feld input-feld-not-succesfull"
             }
@@ -86,7 +85,7 @@ export default function SignUpPage() {
             className={
               !lastName
                 ? "input-feld"
-                : isLastNameValueCorrect
+                : isLastNameValueValid
                 ? "input-feld input-feld-succesfull"
                 : "input-feld input-feld-not-succesfull"
             }
@@ -102,7 +101,7 @@ export default function SignUpPage() {
           className={
             !login
               ? "input-feld"
-              : isLoginValueCorrect
+              : isLoginValueValid
               ? "input-feld input-feld-succesfull"
               : "input-feld input-feld-not-succesfull"
           }
@@ -117,7 +116,7 @@ export default function SignUpPage() {
           className={
             !password
               ? "input-feld"
-              : isPasswordValueCorrect
+              : isPasswordValueValid
               ? "input-feld input-feld-succesfull"
               : "input-feld input-feld-not-succesfull"
           }

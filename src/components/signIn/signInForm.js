@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, NavLink } from "react-router-dom";
 import formLogo from "../img/padlock.svg";
+import { parseStorageData } from "../untils.js";
 import "../index.scss";
 
 export default function SignInForm() {
-  let data = localStorage.getItem("data");
-  data = JSON.parse(data);
-  console.log(data);
+  const data = parseStorageData("data");
   const [loginValue, setLoginValue] = useState(data ? data.login : "");
   const [passwordValue, setPasswordValue] = useState(data ? data.password : "");
   const [isUserAuthorizated, setIsUserAuthorizated] = useState(false);
   const [authorizationMessage, setAuthorizationMessage] = useState("");
   const [rememberUser, setrememberUser] = useState(false);
 
-  let user = localStorage.getItem("user");
-  user = JSON.parse(user);
+  const user = parseStorageData("user");
 
   const signIn = () => {
     if (loginValue && passwordValue && user) {
